@@ -7,6 +7,16 @@ class CoinToss {
         this.audio = new Audio('assets/sounds/coin_toss.mp3');
         this.themeButton = document.querySelector('.theme-button');
         
+        // 添加设置相关的元素引用
+        this.settingsButton = document.querySelector('.settings-button');
+        this.settingsPanel = document.querySelector('.settings-panel');
+        this.closeSettings = document.querySelector('.close-settings');
+        this.saveSettings = document.querySelector('.save-settings');
+        this.headsNameInput = document.querySelector('#heads-name');
+        this.tailsNameInput = document.querySelector('#tails-name');
+        this.headsColorInput = document.querySelector('#heads-color');
+        this.tailsColorInput = document.querySelector('#tails-color');
+        
         // 添加新的元素引用
         this.totalCount = document.querySelector('.total-count');
         this.headsCount = document.querySelector('.heads-count');
@@ -17,8 +27,10 @@ class CoinToss {
         
         // 初始化统计数据
         this.stats = this.loadStats();
+        this.settings = this.loadSettings();
         this.updateStatsDisplay();
         this.loadHistory();
+        this.applySettings();
         
         this.init();
         this.initTheme();
@@ -34,6 +46,11 @@ class CoinToss {
             }
         });
         this.themeButton.addEventListener('click', () => this.toggleTheme());
+        
+        // 添加设置相关的事件监听器
+        this.settingsButton.addEventListener('click', () => this.openSettings());
+        this.closeSettings.addEventListener('click', () => this.closeSettingsPanel());
+        this.saveSettings.addEventListener('click', () => this.saveSettingsData());
     }
 
     initTheme() {
@@ -92,12 +109,86 @@ class CoinToss {
         this.tailsPercentage.textContent = `(${tailsPercentage}%)`;
     }
     
+    loadSettings() {
+        const savedSettings = localStorage.getItem('coinTossSettings');
+        return savedSettings ? JSON.parse(savedSettings) : {
+            headsName: '正',
+            tailsName: '反',
+            headsColor: '#FFD700',
+            tailsColor: '#FFD700'
+        };
+    }
+    
+    saveSettingsData() {
+        const settings = {
+            headsName: this.headsNameInput.value,
+            tailsName: this.tailsNameInput.value,
+            headsColor: this.headsColorInput.value,
+            tailsColor: this.tailsColorInput.value
+        };
+        
+        localStorage.setItem('coinTossSettings', JSON.stringify(settings));
+        this.settings = settings;
+        this.applySettings();
+        this.closeSettingsPanel();
+        
+        // 显示保存成功提示
+        this.resultText.textContent = '设置已保存！';
+        setTimeout(() => {
+            this.resultText.textContent = '';
+        }, 2000);
+    }
+    
+    applySettings() {
+        // 更新硬币文字
+        const headsText = document.querySelector('.heads .coin-text');
+        const tailsText = document.querySelector('.tails .coin-text');
+        headsText.textContent = this.settings.headsName;
+        tailsText.textContent = this.settings.tailsName;
+        
+        // 更新硬币颜色
+        const headsCircle = document.querySelector('.heads circle');
+        const tailsCircle = document.querySelector('.tails circle');
+        headsCircle.setAttribute('fill', this.settings.headsColor);
+        tailsCircle.setAttribute('fill', this.settings.tailsColor);
+        
+        // 更新设置面板中的值
+        this.headsNameInput.value = this.settings.headsName;
+        this.tailsNameInput.value = this.settings.tailsName;
+        this.headsColorInput.value = this.settings.headsColor;
+        this.tailsColorInput.value = this.settings.tailsColor;
+    }
+    
+    openSettings() {
+        this.settingsPanel.classList.add('active');
+    }
+    
+    closeSettingsPanel() {
+        this.settingsPanel.classList.remove('active');
+    }
+    
+    loadHistory() {
+        const savedHistory = localStorage.getItem('coinTossHistory');
+        if (savedHistory) {
+            const historyItems = JSON.parse(savedHistory);
+            historyItems.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.innerHTML = `
+                    <span class="result">${item.result}</span>
+                    <span class="time">${item.time}</span>
+                `;
+                this.historyList.appendChild(historyItem);
+            });
+        }
+    }
+
     addToHistory(result) {
         const time = new Date().toLocaleTimeString();
         const historyItem = document.createElement('div');
         historyItem.className = 'history-item';
         historyItem.innerHTML = `
-            <span class="result">${result ? '正面' : '反面'}</span>
+            <span class="result">${result ? this.settings.headsName : this.settings.tailsName}</span>
             <span class="time">${time}</span>
         `;
         
@@ -118,22 +209,6 @@ class CoinToss {
             time: item.querySelector('.time').textContent
         }));
         localStorage.setItem('coinTossHistory', JSON.stringify(historyItems));
-    }
-    
-    loadHistory() {
-        const savedHistory = localStorage.getItem('coinTossHistory');
-        if (savedHistory) {
-            const historyItems = JSON.parse(savedHistory);
-            historyItems.forEach(item => {
-                const historyItem = document.createElement('div');
-                historyItem.className = 'history-item';
-                historyItem.innerHTML = `
-                    <span class="result">${item.result}</span>
-                    <span class="time">${item.time}</span>
-                `;
-                this.historyList.appendChild(historyItem);
-            });
-        }
     }
 
     async tossCoin() {
@@ -166,7 +241,7 @@ class CoinToss {
         this.saveStats();
         this.addToHistory(isHeads);
         
-        this.resultText.textContent = isHeads ? '正面！' : '反面！';
+        this.resultText.textContent = isHeads ? `${this.settings.headsName}！` : `${this.settings.tailsName}！`;
         this.isAnimating = false;
     }
 }
