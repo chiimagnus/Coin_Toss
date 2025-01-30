@@ -66,6 +66,26 @@
                     <label>反面颜色：</label>
                     <input type="color" id="tails-color" value="#FFD700">
                 </div>
+                <div class="setting-item probability-settings">
+                    <label>概率设置：</label>
+                    <div class="probability-inputs">
+                        <div class="prob-input-group">
+                            <label>正面概率：</label>
+                            <div class="prob-input-wrapper">
+                                <input type="number" id="heads-prob" value="50" min="0" max="100" step="1">
+                                <span class="percentage">%</span>
+                            </div>
+                        </div>
+                        <div class="prob-input-group">
+                            <label>反面概率：</label>
+                            <div class="prob-input-wrapper">
+                                <input type="number" id="tails-prob" value="50" min="0" max="100" step="1" disabled>
+                                <span class="percentage">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prob-hint">调整正面概率，反面概率会自动计算</div>
+                </div>
                 <button class="save-settings">保存设置</button>
             </div>
         </div>

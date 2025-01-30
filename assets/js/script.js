@@ -16,6 +16,8 @@ class CoinToss {
         this.tailsNameInput = document.querySelector('#tails-name');
         this.headsColorInput = document.querySelector('#heads-color');
         this.tailsColorInput = document.querySelector('#tails-color');
+        this.headsProbInput = document.querySelector('#heads-prob');
+        this.tailsProbInput = document.querySelector('#tails-prob');
         
         // 添加新的元素引用
         this.totalCount = document.querySelector('.total-count');
@@ -51,6 +53,9 @@ class CoinToss {
         this.settingsButton.addEventListener('click', () => this.openSettings());
         this.closeSettings.addEventListener('click', () => this.closeSettingsPanel());
         this.saveSettings.addEventListener('click', () => this.saveSettingsData());
+        
+        // 添加概率输入事件监听
+        this.headsProbInput.addEventListener('input', () => this.updateProbability());
     }
 
     initTheme() {
@@ -115,8 +120,21 @@ class CoinToss {
             headsName: '正',
             tailsName: '反',
             headsColor: '#FFD700',
-            tailsColor: '#FFD700'
+            tailsColor: '#FFD700',
+            headsProb: 50
         };
+    }
+    
+    updateProbability() {
+        let headsProb = parseInt(this.headsProbInput.value);
+        
+        // 确保输入值在0-100之间
+        if (headsProb < 0) headsProb = 0;
+        if (headsProb > 100) headsProb = 100;
+        
+        // 更新输入框的值
+        this.headsProbInput.value = headsProb;
+        this.tailsProbInput.value = 100 - headsProb;
     }
     
     saveSettingsData() {
@@ -124,7 +142,8 @@ class CoinToss {
             headsName: this.headsNameInput.value,
             tailsName: this.tailsNameInput.value,
             headsColor: this.headsColorInput.value,
-            tailsColor: this.tailsColorInput.value
+            tailsColor: this.tailsColorInput.value,
+            headsProb: parseInt(this.headsProbInput.value)
         };
         
         localStorage.setItem('coinTossSettings', JSON.stringify(settings));
@@ -157,6 +176,10 @@ class CoinToss {
         this.tailsNameInput.value = this.settings.tailsName;
         this.headsColorInput.value = this.settings.headsColor;
         this.tailsColorInput.value = this.settings.tailsColor;
+        
+        // 更新概率输入框的值
+        this.headsProbInput.value = this.settings.headsProb;
+        this.tailsProbInput.value = 100 - this.settings.headsProb;
     }
     
     openSettings() {
@@ -221,7 +244,8 @@ class CoinToss {
         this.audio.play();
         
         const rotations = Math.floor(Math.random() * 3) + 3;
-        const isHeads = Math.random() < 0.5;
+        // 使用自定义概率
+        const isHeads = Math.random() * 100 < this.settings.headsProb;
         
         const degrees = rotations * 360 + (isHeads ? 0 : 180);
         
