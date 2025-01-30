@@ -5,8 +5,10 @@ class CoinToss {
         this.resultText = document.querySelector('.result-text');
         this.isAnimating = false;
         this.audio = new Audio('assets/sounds/coin_toss.mp3');
+        this.themeButton = document.querySelector('.theme-button');
         
         this.init();
+        this.initTheme();
     }
 
     init() {
@@ -18,6 +20,38 @@ class CoinToss {
                 this.tossCoin();
             }
         });
+        this.themeButton.addEventListener('click', () => this.toggleTheme());
+    }
+
+    initTheme() {
+        // 检查本地存储中的主题设置
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            // 如果系统设置为深色模式，自动切换到深色主题
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            // 添加这个默认设置
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        }
+
+        // 监听系统主题变化
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            const newTheme = e.matches ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+
+    toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
     }
 
     async tossCoin() {
