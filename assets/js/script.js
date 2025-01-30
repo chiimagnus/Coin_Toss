@@ -19,6 +19,12 @@ class CoinToss {
         this.headsProbInput = document.querySelector('#heads-prob');
         this.tailsProbInput = document.querySelector('#tails-prob');
         
+        // 添加清除数据相关的元素引用
+        this.clearDataButton = document.querySelector('.clear-data-button');
+        this.confirmDialog = document.querySelector('.confirm-dialog');
+        this.confirmYes = document.querySelector('.confirm-yes');
+        this.confirmNo = document.querySelector('.confirm-no');
+        
         // 添加新的元素引用
         this.totalCount = document.querySelector('.total-count');
         this.headsCount = document.querySelector('.heads-count');
@@ -56,6 +62,11 @@ class CoinToss {
         
         // 添加概率输入事件监听
         this.headsProbInput.addEventListener('input', () => this.updateProbability());
+        
+        // 添加清除数据相关的事件监听
+        this.clearDataButton.addEventListener('click', () => this.showConfirmDialog());
+        this.confirmYes.addEventListener('click', () => this.clearAllData());
+        this.confirmNo.addEventListener('click', () => this.hideConfirmDialog());
     }
 
     initTheme() {
@@ -267,6 +278,38 @@ class CoinToss {
         
         this.resultText.textContent = isHeads ? `${this.settings.headsName}！` : `${this.settings.tailsName}！`;
         this.isAnimating = false;
+    }
+
+    showConfirmDialog() {
+        this.confirmDialog.classList.add('active');
+    }
+    
+    hideConfirmDialog() {
+        this.confirmDialog.classList.remove('active');
+    }
+    
+    clearAllData() {
+        // 清除统计数据
+        this.stats = {
+            total: 0,
+            heads: 0,
+            tails: 0
+        };
+        this.saveStats();
+        this.updateStatsDisplay();
+        
+        // 清除历史记录
+        this.historyList.innerHTML = '';
+        localStorage.removeItem('coinTossHistory');
+        
+        // 隐藏确认对话框
+        this.hideConfirmDialog();
+        
+        // 显示清除成功提示
+        this.resultText.textContent = '数据已清除！';
+        setTimeout(() => {
+            this.resultText.textContent = '';
+        }, 2000);
     }
 }
 

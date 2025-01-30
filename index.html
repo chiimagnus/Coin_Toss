@@ -86,6 +86,15 @@
                     </div>
                     <div class="prob-hint">调整正面概率，反面概率会自动计算</div>
                 </div>
+                <div class="setting-item clear-data-section">
+                    <button class="clear-data-button">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                        清除所有数据
+                    </button>
+                    <div class="clear-hint">清除所有投掷记录和统计数据</div>
+                </div>
                 <button class="save-settings">保存设置</button>
             </div>
         </div>
@@ -115,5 +124,15 @@
         </div>
     </div>
     <script src="assets/js/script.js"></script>
+    
+    <!-- 添加确认对话框 -->
+    <div class="confirm-dialog">
+        <h3>确认清除数据</h3>
+        <p>这将清除所有投掷记录和统计数据，此操作不可撤销。确定要继续吗？</p>
+        <div class="confirm-buttons">
+            <button class="confirm-button confirm-no">取消</button>
+            <button class="confirm-button confirm-yes">确定清除</button>
+        </div>
+    </div>
 </body>
 </html>

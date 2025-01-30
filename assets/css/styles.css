@@ -534,4 +534,114 @@ body {
 input[type="number"]:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+/* 清除数据按钮样式 */
+.clear-data-section {
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.clear-data-button {
+    width: 100%;
+    padding: 10px;
+    background: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.clear-data-button:hover {
+    background: #ff6b81;
+    transform: translateY(-1px);
+}
+
+.clear-data-button svg {
+    fill: currentColor;
+}
+
+.clear-hint {
+    font-size: 12px;
+    color: var(--text-color);
+    opacity: 0.7;
+    margin-top: 8px;
+    text-align: center;
+}
+
+/* 确认对话框样式 */
+.confirm-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: var(--card-background);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    width: 90%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.confirm-dialog.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.confirm-dialog h3 {
+    margin: 0 0 15px 0;
+    color: var(--text-color);
+}
+
+.confirm-dialog p {
+    margin: 0 0 20px 0;
+    color: var(--text-color);
+    opacity: 0.8;
+    font-size: 14px;
+}
+
+.confirm-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.confirm-button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.confirm-yes {
+    background: #ff4757;
+    color: white;
+}
+
+.confirm-yes:hover {
+    background: #ff6b81;
+}
+
+.confirm-no {
+    background: var(--border-color);
+    color: var(--text-color);
+}
+
+.confirm-no:hover {
+    opacity: 0.8;
 } 
