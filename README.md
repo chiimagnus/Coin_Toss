@@ -1,23 +1,34 @@
-# CoinToss
- 一个简单的硬币toss，网页版
+# CoinToss 硬币投掷器
+
+一个优雅的在线硬币投掷工具，具有流畅的动画效果和清脆的音效。
+
+## 特点
+
+- 极简主义设计风格
+- 流畅的3D硬币翻转动画
+- 真实的投掷音效
+- 完全响应式设计
+- 支持键盘操作（空格键投掷）
 
 ## 文件结构
 
 ```bash
 ├── README.md
 ├── index.html
-├── materials
-│   ├── coin_toss.mp3
-│   ├── heads.png
-│   ├── spinning.png
-│   └── tails.png
-├── script.js
-└── styles.css
+├── assets/
+│   ├── css/
+│   │   └── styles.css
+│   ├── js/
+│   │   └── script.js
+│   ├── sounds/
+│   │   └── coin_toss.mp3
+│   └── images/
+│       ├── coin-heads.svg
+│       ├── coin-tails.svg
+│       └── coin-edge.svg
 ```
 
-`index.html`是主程序。
-`materials/`文件夹包含图片和音频素材。
+## 使用方法
 
-## 运行指南
-
-双击`index.html`即可运行～
+直接双击 `index.html` 即可在浏览器中运行。
+点击硬币或按空格键即可投掷。

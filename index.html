@@ -1,19 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucky Coin Toss</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>优雅硬币投掷器</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Lucky Coin Toss</h1>
-        <div id="coin" class="coin"></div>
-        <div id="result" class="result"></div>
-        <button id="tossButton">投掷</button>
-        <audio id="tossSound" src="materials/coin_toss.mp3"></audio>
+        <div class="coin-wrapper">
+            <div class="coin">
+                <div class="side heads">
+                    <svg viewBox="0 0 200 200" class="coin-svg">
+                        <circle cx="100" cy="100" r="90" fill="#FFD700"/>
+                        <text x="100" y="115" text-anchor="middle" class="coin-text">正</text>
+                    </svg>
+                </div>
+                <div class="side tails">
+                    <svg viewBox="0 0 200 200" class="coin-svg">
+                        <circle cx="100" cy="100" r="90" fill="#FFD700"/>
+                        <text x="100" y="115" text-anchor="middle" class="coin-text">反</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="result-text"></div>
+        <button class="toss-button">投掷硬币</button>
     </div>
-    <script src="script.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
