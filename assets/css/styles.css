@@ -1,11 +1,12 @@
 :root {
-    --coin-size: 200px;
+    --coin-size: 180px;
     --primary-color: #1c1c1e;
     --background-color: #f5f5f7;
-    --coin-color: #FFD700;
     --text-color: #1c1c1e;
     --button-text-color: #ffffff;
     --coin-shadow: rgba(0, 0, 0, 0.2);
+    --card-background: #ffffff;
+    --border-radius: 16px;
 }
 
 [data-theme="dark"] {
@@ -14,6 +15,7 @@
     --text-color: #f5f5f7;
     --button-text-color: #1c1c1e;
     --coin-shadow: rgba(255, 255, 255, 0.1);
+    --card-background: #2c2c2e;
 }
 
 [data-theme="light"] {
@@ -22,6 +24,7 @@
     --text-color: #1c1c1e;
     --button-text-color: #ffffff;
     --coin-shadow: rgba(0, 0, 0, 0.2);
+    --card-background: #ffffff;
 }
 
 * {
@@ -43,12 +46,19 @@ body {
 
 .container {
     text-align: center;
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 .coin-wrapper {
     width: var(--coin-size);
     height: var(--coin-size);
-    margin: 50px auto;
+    margin: 60px auto 20px;
     perspective: 1000px;
 }
 
@@ -59,7 +69,7 @@ body {
     transform-style: preserve-3d;
     transition: transform 1.5s ease-out;
     cursor: pointer;
-    box-shadow: 0 8px 16px var(--coin-shadow);
+    box-shadow: 0 8px 24px var(--coin-shadow);
 }
 
 .side {
@@ -70,6 +80,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffd700, #ffed4a);
 }
 
 .heads {
@@ -86,45 +98,49 @@ body {
 }
 
 .coin-text {
-    font-size: 48px;
-    fill: var(--text-color);
+    font-size: 42px;
+    fill: var(--primary-color);
     font-weight: bold;
 }
 
 .result-text {
-    font-size: 24px;
+    font-size: 28px;
     margin: 20px 0;
     color: var(--text-color);
     min-height: 36px;
+    font-weight: 600;
 }
 
 .toss-button {
-    padding: 12px 24px;
+    padding: 14px 32px;
     font-size: 18px;
     background-color: var(--primary-color);
     color: var(--button-text-color);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    box-shadow: 0 2px 8px var(--coin-shadow);
 }
 
 .toss-button:hover {
-    transform: scale(1.05);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--coin-shadow);
 }
 
 .toss-button:active {
-    transform: scale(0.95);
+    transform: translateY(0);
 }
 
 .theme-toggle {
-    position: fixed;
+    position: absolute;
     top: 20px;
     right: 20px;
 }
 
 .theme-button {
-    background: var(--primary-color);
+    background: var(--card-background);
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -134,15 +150,18 @@ body {
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 8px var(--coin-shadow);
-    transition: transform 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .theme-button:hover {
-    transform: scale(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--coin-shadow);
 }
 
 .theme-button svg {
-    fill: var(--background-color);
+    fill: var(--text-color);
+    width: 20px;
+    height: 20px;
 }
 
 .sun-icon {
@@ -158,22 +177,22 @@ body {
 }
 
 .stats-container {
-    margin-top: 30px;
-    padding: 20px;
-    border-radius: 12px;
-    background-color: var(--background-color);
-    box-shadow: 0 2px 8px var(--coin-shadow);
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: 20px;
+    padding: 24px;
+    border-radius: var(--border-radius);
+    background-color: var(--card-background);
+    box-shadow: 0 4px 16px var(--coin-shadow);
+    width: 100%;
+    flex-shrink: 0;
 }
 
 .stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
     border-bottom: 1px solid var(--coin-shadow);
 }
 
@@ -186,20 +205,21 @@ body {
     font-size: 14px;
     color: var(--text-color);
     opacity: 0.8;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: 500;
 }
 
 .total-count,
 .heads-count,
 .tails-count {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
     color: var(--text-color);
 }
 
 .heads-percentage,
 .tails-percentage {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-color);
     opacity: 0.6;
     margin-left: 4px;
@@ -208,27 +228,29 @@ body {
 .history-container h3 {
     font-size: 16px;
     color: var(--text-color);
-    margin-bottom: 10px;
+    margin-bottom: 16px;
     text-align: left;
+    font-weight: 600;
 }
 
 .history-list {
-    max-height: 150px;
+    max-height: 180px;
     overflow-y: auto;
-    padding-right: 10px;
+    padding-right: 12px;
 }
 
 .history-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px;
+    padding: 12px 16px;
     margin-bottom: 8px;
-    border-radius: 6px;
-    background-color: var(--primary-color);
-    color: var(--button-text-color);
+    border-radius: calc(var(--border-radius) / 2);
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-size: 14px;
     animation: fadeIn 0.3s ease;
+    box-shadow: 0 2px 4px var(--coin-shadow);
 }
 
 .history-item .time {
@@ -247,17 +269,16 @@ body {
     }
 }
 
-/* 自定义滚动条样式 */
 .history-list::-webkit-scrollbar {
     width: 6px;
 }
 
 .history-list::-webkit-scrollbar-track {
-    background: var(--background-color);
+    background: transparent;
 }
 
 .history-list::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
+    background: var(--coin-shadow);
     border-radius: 3px;
 }
 
@@ -266,12 +287,44 @@ body {
         --coin-size: 150px;
     }
     
+    .container {
+        padding: 16px;
+    }
+
+    .coin-wrapper {
+        margin: 50px auto 20px;
+    }
+    
     .stats {
-        gap: 10px;
+        gap: 12px;
     }
     
     .stat-item {
         font-size: 14px;
+    }
+    
+    .history-list {
+        max-height: 150px;
+    }
+
+    .result-text {
+        font-size: 24px;
+    }
+
+    .toss-button {
+        padding: 12px 28px;
+        font-size: 16px;
+    }
+}
+
+@media (max-height: 700px) {
+    .coin-wrapper {
+        margin: 40px auto 16px;
+    }
+    
+    .stats-container {
+        margin-bottom: 10px;
+        padding: 20px;
     }
     
     .history-list {
