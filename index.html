@@ -36,6 +36,30 @@
         </div>
         <div class="result-text"></div>
         <button class="toss-button">投掷硬币</button>
+        
+        <!-- 添加统计和历史记录区域 -->
+        <div class="stats-container">
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">总次数:</span>
+                    <span class="total-count">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">正面:</span>
+                    <span class="heads-count">0</span>
+                    <span class="heads-percentage">(0%)</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">反面:</span>
+                    <span class="tails-count">0</span>
+                    <span class="tails-percentage">(0%)</span>
+                </div>
+            </div>
+            <div class="history-container">
+                <h3>投掷历史</h3>
+                <div class="history-list"></div>
+            </div>
+        </div>
     </div>
     <script src="assets/js/script.js"></script>
 </body>
